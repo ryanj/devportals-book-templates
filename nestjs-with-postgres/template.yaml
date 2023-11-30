@@ -42,7 +42,7 @@ spec:
           title: Cluster Id
           type: string
           description: Id of the cluster
-          default: .apps.cluster-lsrww.sandbox541.opentlc.com
+          default: .apps.cluster-5m2j6.sandbox1189.opentlc.com
         namespace:
           title: Namespace
           type: string
