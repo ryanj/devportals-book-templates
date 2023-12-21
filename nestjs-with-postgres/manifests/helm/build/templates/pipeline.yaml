@@ -57,6 +57,8 @@ spec:
       params:
         - name: COMPONENT_ID
           value: $(params.component-id)
+        - name: NAMESPACE
+          value: $(params.namespace)
       runAfter:
         - build-and-push
       taskRef:
