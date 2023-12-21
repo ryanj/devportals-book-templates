@@ -2,7 +2,7 @@ apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
   name: ${{values.component_id}}-frontend
-  description: 'the angular single page application ${{values.component_id}} frontend'
+  description: 'The Angular frontend for ${{values.component_id}}'
   annotations:
     backstage.io/kubernetes-id: ${{values.component_id}}-frontend
     backstage.io/kubernetes-namespace: ${{values.namespace}}
