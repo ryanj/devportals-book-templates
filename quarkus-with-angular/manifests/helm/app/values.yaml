@@ -1,7 +1,7 @@
 app:
   componentId: ${{values.component_id}}
   namespace: ${{values.namespace}}
-
+  applicationId: ${{values.application_id}}
 namespace:
   enabled: true
   name: ${{values.namespace}}

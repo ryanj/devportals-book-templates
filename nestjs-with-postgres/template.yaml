@@ -119,6 +119,7 @@ spec:
           image_host: ${{parameters.image_host}}
           image_name: ${{parameters.namespace}}/${{parameters.application_id}}
           image_tag: ${{parameters.image_tag}}
+          application_id: ${{parameters.application_id}}
         targetPath: ./tenant-gitops
     - id: publishGitops
       name: Publishing to Deployment Resource Repository
