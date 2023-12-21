@@ -24,6 +24,10 @@ spec:
       description: the component id
       type: string
       default: {{ .Values.app.name }}
+    - name: namespace
+      description: the namespace
+      type: string
+      default: {{ .Values.app.namespace }}
   tasks:
     - name: git-clone
       params:
