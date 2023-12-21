@@ -11,7 +11,7 @@ metadata:
     backstage.io/kubernetes-namespace: ${{values.namespace}}
     backstage.io/techdocs-ref: dir:.
     gitlab.com/project-slug: ${{values.gitlabGroup}}/${{values.repoName}}
-    janus-idp.io/tekton-enabled: 'true'
+    janus-idp.io/tekton : ${{values.component_id}}
   tags:
     - nodejs
     - nestjs
