@@ -4,10 +4,12 @@ metadata:
   name: ${{values.component_id}}-frontend
   description: 'The Angular frontend for ${{values.component_id}}'
   annotations:
-    backstage.io/kubernetes-id: ${{values.component_id}}-frontend
+    backstage.io/kubernetes-id: ${{values.component_id}}
     backstage.io/kubernetes-namespace: ${{values.namespace}}
     gitlab.com/project-slug: ${{values.gitlabGroup}}/${{values.repoName}}
     backstage.io/techdocs-entity: component:default/${{values.component_id}}-service
+  labels:
+    backstage.io/kubernetes-id: ${{values.component_id}}
   tags:
     - typescript
     - angular
