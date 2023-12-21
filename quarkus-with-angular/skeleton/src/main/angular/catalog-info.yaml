@@ -22,7 +22,7 @@ metadata:
     - url: https://devspaces${{values.cluster_id}}/#https://${{values.git_host}}/${{values.gitlabGroup}}/${{values.repoName}}?che-editor=che-incubator/che-code/latest&devfilePath=src/main/angular/.devfile-vscode.yaml
       title: OpenShift Dev Spaces
       icon: web
-    - url: http://${{values.component_id}}-${{values.namespace}}${{values.cluster_id}}
+    - url: https://${{values.component_id}}-${{values.namespace}}${{values.cluster_id}}
       title: ${{values.component_id}} Frontend
       icon: web
 spec:

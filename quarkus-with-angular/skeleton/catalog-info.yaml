@@ -53,7 +53,7 @@ metadata:
   name: ${{values.component_id}}-api
   description: API surface exposed by the Quarkus service
   links:
-    - url: http://${{values.component_id}}-${{values.namespace}}${{values.cluster_id}}/q/swagger-ui
+    - url: https://${{values.component_id}}-${{values.namespace}}${{values.cluster_id}}/q/swagger-ui
       title: Swagger UI
       icon: web
     - url: https://${{values.git_host}}/${{values.gitlabGroup}}/${{values.repoName}}/-/blob/main/src/main/resources/META-INF/openapi.yaml

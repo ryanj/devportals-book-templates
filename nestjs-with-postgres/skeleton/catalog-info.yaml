@@ -53,7 +53,7 @@ metadata:
   name: ${{values.component_id}}-api
   description: API surface exposed by the NestJS service
   links:
-    - url: http://${{values.component_id}}-${{values.namespace}}${{values.cluster_id}}/swagger
+    - url: https://${{values.component_id}}-${{values.namespace}}${{values.cluster_id}}/swagger
       title: Swagger UI
       icon: web
     - url: https://${{values.git_host}}/${{values.gitlabGroup}}/${{values.repoName}}/-/blob/main/openapi.yaml
