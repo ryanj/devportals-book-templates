@@ -1,8 +1,8 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: quarkus-app-patch
-  title: Quarkus Application Patch Template
+  name: quarkus-app-patch-multi
+  title: Quarkus Application Patch Template (Multi)
   description: This is an example template to patch existing Quarkus components
   tags:
     - template
@@ -11,14 +11,14 @@ metadata:
     - book
 spec:
   owner: rhdh-idp-book-authors
-  type: app-patch
+  type: app-patch-multi
 
   parameters:
     - title: Provide information about the component
       required:
         - clusterId
         - gitlabGroup
-        - gitlabRepo
+        - gitlabRepos
       properties:
         clusterId:
           title: Cluster Id
@@ -32,10 +32,13 @@ spec:
           default: development
           enum:
             - development
-        gitlabRepo:
-          title: GitLab repo name
-          type: string 
-          description: the name of the existing GitLab repo
+        gitlabRepos:
+          title: GitLab repo names
+          type: array
+          items:
+            type: string
+            title: repo name
+          description: the names of the existing GitLab repos to apply the patch on
           default: ''
         gitlabBranch:
           title: GitLab Branch
@@ -72,22 +75,25 @@ spec:
 
   steps:
     - id: fetch-repo
-      name: fetch repo content
+      name: Fetch repo(s)
+      each: ${{ parameters.gitlabRepos }}
       action: fetch:plain
       input:
-        url: https://gitlab-gitlab${{ parameters.clusterId }}/${{ parameters.gitlabGroup }}/${{ parameters.gitlabRepo }}
+        url: https://gitlab-gitlab${{ parameters.clusterId }}/${{ parameters.gitlabGroup }}/${{ each.value }}
+        targetPath: ./${{ each.value }}    
     - id: patch-content
-      name: patch repo content
+      name: Patch repo(s)
+      each: ${{ parameters.gitlabRepos }}
       action: roadiehq:utils:fs:replace
       input:
         files:
-          - file: ${{ parameters.pomPath }}
+          - file: ./${{ each.value }}/${{ parameters.pomPath }}
             find: '3.4.2'
             replaceWith: ${{ parameters.quarkusVersion }}
-          - file: ${{ parameters.containerFilePath }}
+          - file: ./${{ each.value }}/${{ parameters.containerFilePath }}
             find: 'ubi8/openjdk-17:1.16'
             replaceWith: ${{ parameters.baseImage }}
-          - file: ${{ parameters.pomPath }}
+          - file: ./${{ each.value }}/${{ parameters.pomPath }}
             # NOTE:
             # The following find & replace is an obvious hack and only shown here for demo purposes :)
             # Ideally, there'd be more robust actions that would at least allow to find and replace by means of regex.
@@ -103,17 +109,20 @@ spec:
                 <groupId>io.quarkus</groupId>
                 <artifactId>quarkus-smallrye-health</artifactId>
               </dependency>
-
     - id: open-mr
-      name: open merge request
+      name: Open merge request(s)
+      each: ${{ parameters.gitlabRepos }}
       action: publish:gitlab:merge-request
       input: 
-        repoUrl: gitlab-gitlab${{ parameters.clusterId }}?repo=${{ parameters.gitlabRepo }}&owner=${{ parameters.gitlabGroup }}
+        repoUrl: gitlab-gitlab${{ parameters.clusterId }}?repo=${{ each.value }}&owner=${{ parameters.gitlabGroup }}
         title: custom patches for quarkus component
         description: custom patches for quarkus component
         branchName: ${{ parameters.gitlabBranch }}
+        sourcePath: ./${{ each.value }}
         commitAction: update
-  output:
-    links:
-      - title: Merge Request URL
-        url: ${{ steps["open-mr"].output.mergeRequestUrl }}
+    - id: log-mr
+      name: Links to merge request(s)
+      action: debug:log
+      input:
+        message: "find opened merge request(s) here"
+        extra: ${{ steps['open-mr'].output.mergeRequestUrl }}
