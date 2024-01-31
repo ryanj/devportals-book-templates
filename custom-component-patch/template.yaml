@@ -1,8 +1,8 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: quarkus-app-patch-multi
-  title: Quarkus Application Patch Template (Multi)
+  name: quarkus-app-patch
+  title: Quarkus Application Patch Template
   description: This is an example template to patch existing Quarkus components
   tags:
     - template
@@ -11,7 +11,7 @@ metadata:
     - book
 spec:
   owner: rhdh-idp-book-authors
-  type: app-patch-multi
+  type: app-patch
 
   parameters:
     - title: Provide information about the component
