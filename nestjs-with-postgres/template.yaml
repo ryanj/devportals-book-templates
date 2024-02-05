@@ -42,7 +42,7 @@ spec:
           title: Cluster Id
           type: string
           description: Id of the cluster
-          default: .apps.cluster-2c86h.sandbox334.opentlc.com
+          default: .apps.cluster-hck78.sandbox2634.opentlc.com
         namespace:
           title: Namespace
           type: string
