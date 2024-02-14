@@ -24,7 +24,7 @@ spec:
           title: Cluster Id
           type: string
           description: Id of the cluster
-          default: .apps.cluster-qmvtk.sandbox1799.opentlc.com
+          default: .apps.cluster-mhc9x.mhc9x.sandbox2477.opentlc.com
         gitlabGroup:
           title: GitLab repo owner
           type: string
