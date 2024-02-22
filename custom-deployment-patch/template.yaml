@@ -72,13 +72,7 @@ spec:
           image_host: 'image-registry.openshift-image-registry.svc:5000'
           image_repository: ${{parameters.namespace}}
           image_name: ${{parameters.applicationId}}
-          image_tag: 'latest'      
-    - id: fetch-repo
-      name: Fetch gitops repo
-      action: fetch:plain
-      input:
-        url: https://gitlab-gitlab${{ parameters.clusterId }}/${{ parameters.gitlabGroup }}/${{ parameters.namespace }}-${{ parameters.applicationId }}-gitops
-        targetPath: ./current-gitops
+          image_tag: 'latest'
     - id: open-mr-1
       name: Open merge request 1
       action: publish:gitlab:merge-request
@@ -95,7 +89,7 @@ spec:
       name: Link to merge request 1
       action: debug:log
       input:
-        message: "find opened merge request(s) here"
+        message: "find opened merge request here"
         extra: ${{ steps['open-mr-1'].output.mergeRequestUrl }}
     - id: open-mr-2
       name: Open merge request 2
@@ -113,5 +107,23 @@ spec:
       name: Link to merge request 2
       action: debug:log
       input:
-        message: "find opened merge request(s) here"
+        message: "find opened merge request here"
         extra: ${{ steps['open-mr-2'].output.mergeRequestUrl }}
+    - id: open-mr-3
+      name: Open merge request 3
+      action: publish:gitlab:merge-request
+      input: 
+        repoUrl: gitlab-gitlab${{ parameters.clusterId }}?repo=${{ parameters.namespace }}-${{ parameters.applicationId }}-gitops&owner=${{ parameters.gitlabGroup }}
+        title: deleted files for staged deployment
+        description: custom templated gitops patch
+        branchName: ${{ parameters.gitlabBranch }}-delete
+        targetBranchName: main
+        sourcePath: ./patch-gitops/delete
+        targetPath: ./
+        commitAction: delete
+    - id: log-mr-3
+      name: Link to merge request 3
+      action: debug:log
+      input:
+        message: "find opened merge request here"
+        extra: ${{ steps['open-mr-3'].output.mergeRequestUrl }}
