@@ -3,7 +3,7 @@ Image Url image will be pushed to defaults to internal registry
 */}}
 {{- define "image.dev-url" -}}
 {{- with .Values.image }}
-{{- printf "%s/%s/%s" .host .repository .name }}
+{{- printf "%s/%s-dev/%s" .host .repository .name }}
 {{- end }}
 {{- end }}
 

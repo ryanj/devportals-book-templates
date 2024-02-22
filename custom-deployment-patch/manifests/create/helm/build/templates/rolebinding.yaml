@@ -2,11 +2,11 @@ kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: image-pusher
-  namespace: ${{values.namespace}}
+  namespace: ${{values.namespace}}-dev
 subjects:
   - kind: ServiceAccount
     name: image-pusher
-    namespace: ${{values.namespace}}
+    namespace: ${{values.namespace}}-dev
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -20,7 +20,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: image-pusher
-    namespace: ${{values.namespace}}
+    namespace: ${{values.namespace}}-dev
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -34,7 +34,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: image-pusher
-    namespace: ${{values.namespace}}
+    namespace: ${{values.namespace}}-dev
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole

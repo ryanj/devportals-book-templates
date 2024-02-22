@@ -19,14 +19,14 @@ spec:
     helm:
       parameters:
       - name: global.namespace.name
-        value: ${{values.namespace}}
+        value: ${{values.namespace}}-dev
       - name: global.environment
-        value: ''
+        value: dev
       - name: global.image.tag
         value: latest
   destination:
     server: https://kubernetes.default.svc
-    namespace: ${{values.namespace}}
+    namespace: ${{values.namespace}}-dev
   ignoreDifferences:
     - group: '*'
       jqPathExpressions:
