@@ -7,7 +7,6 @@ metadata:
       [{"from":{"kind":"ImageStreamTag","name":"{{ .Values.app.applicationId }}:latest","namespace":"{{ .Values.app.namespace }}"},"fieldPath":"spec.template.spec.containers[?(@.name==\"nodejs-template\")].image","pause":"false"}]
     app.openshift.io/connects-to: '[{"apiVersion":"apps/v1","kind":"StatefulSet","name":"{{ .Values.app.componentId }}-dev-postgresql"}]'
   labels:
-    {{- include "backstage.labels" . | nindent 4 }}
     {{- include "nodejs-template.labels" . | nindent 4 }}
     app.kubernetes.io/part-of: idp-book-example
     app.openshift.io/runtime: nodejs
@@ -39,13 +38,13 @@ spec:
         - name: {{ .Chart.Name }}
           env:
           - name: DATABASE_URL
-            value: "postgres://{{.Values.app.database.user}}:{{.Values.app.database.password}}@{{.Values.app.database.host}}-postgresql:{{.Values.app.database.port}}/{{.Values.app.database.catalog}}"
+            value: "postgres://{{.Values.app.database.user}}:{{.Values.app.database.password}}@{{.Values.app.database.host}}{{ne .Values.global.environment "" | ternary (list "-" .Values.global.environment | join "") "" }}-postgresql:{{.Values.app.database.port}}/{{.Values.app.database.catalog}}"
           ports:
             - containerPort: {{ .Values.service.port }}
               protocol: TCP
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{.Values.image.host}}/{{.Values.image.repository}}/{{.Values.image.name}}:{{.Values.global.image.tag}}"
+          image: "{{.Values.image.host}}/{{.Values.image.repository}}{{ne .Values.global.environment "" | ternary (list "-" .Values.global.environment | join "") "" }}/{{.Values.image.name}}:{{.Values.global.image.tag}}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
