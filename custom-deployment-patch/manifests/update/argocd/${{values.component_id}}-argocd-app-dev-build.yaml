@@ -14,7 +14,7 @@ spec:
     path: ./helm/build
   destination:
     server: https://kubernetes.default.svc
-    namespace: ${{values.namespace}}-dev
+    namespace: ${{values.namespace}}
   syncPolicy:
     automated: 
       prune: true
