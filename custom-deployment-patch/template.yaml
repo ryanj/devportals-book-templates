@@ -1,7 +1,7 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: multi-stage-deployment-patch
+  name: staged-deployment-patch
   title: Staged Deployment Patch Template
   description: This is an example template to patch existing component manifests to a staged deployment
   tags:
