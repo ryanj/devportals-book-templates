@@ -38,7 +38,7 @@ spec:
         - name: {{ .Chart.Name }}
           env:
           - name: DATABASE_URL
-            value: "postgres://{{.Values.app.database.user}}:{{.Values.app.database.password}}@{{.Values.app.database.host}}{{ne .Values.global.environment "" | ternary (list "-" .Values.global.environment | join "") "" }}-postgresql:{{.Values.app.database.port}}/{{.Values.app.database.catalog}}"
+            value: "postgres://{{.Values.app.database.user}}:{{.Values.app.database.password}}@{{.Values.app.database.host}}{{ne .Values.global.environment "" | ternary (list "-" .Values.global.environment | join "") "-dev" }}-postgresql:{{.Values.app.database.port}}/{{.Values.app.database.catalog}}"
           ports:
             - containerPort: {{ .Values.service.port }}
               protocol: TCP
