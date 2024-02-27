@@ -2,11 +2,11 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: multi-stage-deployment-patch
-  title: Convert to staged deployment
-  description: This is an example template to patch existing components to a staged deployment
+  title: Staged Deployment Patch Template
+  description: This is an example template to patch existing component manifests to a staged deployment
   tags:
     - template
-    - quarkus
+    - deployment
     - patch
     - book
 spec:
