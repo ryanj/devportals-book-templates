@@ -9,7 +9,7 @@ on:
         type: string
         default: 'XXX_XXX_XXX'
 jobs:
-  do-something-with-code:
+  adapt-cluster-id:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -19,8 +19,8 @@ jobs:
         uses: jacobtomlinson/gha-find-replace@v3
         with:
           find: "<XXX_XXX_XXX>"
-          replace: ${{ input.cluster_id }}
-          include: "templates/**.yaml"
+          replace: ${{ inputs.cluster_id }}
+          include: "**template.yaml"
           regex: false
       - name: commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v4
