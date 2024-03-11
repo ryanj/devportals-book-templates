@@ -25,7 +25,7 @@ spec:
           title: Cluster Id
           type: string
           description: Id of the cluster
-          default: .apps.cluster-hrl86.sandbox3037.opentlc.com
+          default: <XXX_XXX_XXX>
         gitlabGroup:
           title: GitLab repo owner
           type: string
