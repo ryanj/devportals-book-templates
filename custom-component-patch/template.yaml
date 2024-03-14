@@ -16,15 +16,9 @@ spec:
   parameters:
     - title: Provide information about the component
       required:
-        - clusterId
         - gitlabGroup
         - gitlabRepos
       properties:
-        clusterId:
-          title: Cluster Id
-          type: string
-          description: Id of the cluster
-          default: <XXX_XXX_XXX>
         gitlabGroup:
           title: GitLab repo owner
           type: string
@@ -76,24 +70,24 @@ spec:
   steps:
     - id: fetch-repo
       name: Fetch repo(s)
-      each: ${{ parameters.gitlabRepos }}
+      each: {{ '${{ parameters.gitlabRepos }}' }}
       action: fetch:plain
       input:
-        url: https://gitlab-gitlab${{ parameters.clusterId }}/${{ parameters.gitlabGroup }}/${{ each.value }}
-        targetPath: ./${{ each.value }}    
+        url: https://gitlab-gitlab{{cluster_subdomain}}/{{ '${{ parameters.gitlabGroup }}' }}/{{ '${{ each.value }}' }}
+        targetPath: ./{{ '${{ each.value }}' }}    
     - id: patch-content
       name: Patch repo(s)
-      each: ${{ parameters.gitlabRepos }}
+      each: {{ '${{ parameters.gitlabRepos }}' }}
       action: roadiehq:utils:fs:replace
       input:
         files:
-          - file: ./${{ each.value }}/${{ parameters.pomPath }}
+          - file: ./{{ '${{ each.value }}' }}/{{ '${{ parameters.pomPath }}' }}
             find: '3.4.2'
-            replaceWith: ${{ parameters.quarkusVersion }}
-          - file: ./${{ each.value }}/${{ parameters.containerFilePath }}
+            replaceWith: {{ '${{ parameters.quarkusVersion }}' }}
+          - file: ./{{ '${{ each.value }}' }}/{{ '${{ parameters.containerFilePath }}' }}
             find: 'ubi8/openjdk-17:1.16'
-            replaceWith: ${{ parameters.baseImage }}
-          - file: ./${{ each.value }}/${{ parameters.pomPath }}
+            replaceWith: {{ '${{ parameters.baseImage }}' }}
+          - file: ./{{ '${{ each.value }}' }}/{{ '${{ parameters.pomPath }}' }}
             # NOTE:
             # The following find & replace is an obvious hack and only shown here for demo purposes :)
             # Ideally, there'd be more robust actions that would at least allow to find and replace by means of regex.
@@ -111,18 +105,18 @@ spec:
               </dependency>
     - id: open-mr
       name: Open merge request(s)
-      each: ${{ parameters.gitlabRepos }}
+      each: {{ '${{ parameters.gitlabRepos }}' }}
       action: publish:gitlab:merge-request
       input: 
-        repoUrl: gitlab-gitlab${{ parameters.clusterId }}?repo=${{ each.value }}&owner=${{ parameters.gitlabGroup }}
+        repoUrl: gitlab-gitlab{{cluster_subdomain}}?repo={{ '${{ each.value }}' }}&owner={{ '${{ parameters.gitlabGroup }}' }}
         title: custom patches for quarkus component
         description: custom patches for quarkus component
-        branchName: ${{ parameters.gitlabBranch }}
-        sourcePath: ./${{ each.value }}
+        branchName: {{ '${{ parameters.gitlabBranch }}' }}
+        sourcePath: ./{{ '${{ each.value }}' }}
         commitAction: update
     - id: log-mr
       name: Links to merge request(s)
       action: debug:log
       input:
         message: "find opened merge request(s) here"
-        extra: ${{ steps['open-mr'].output.mergeRequestUrl }}
+        extra: {{ '${{ steps['open-mr'].output.mergeRequestUrl }}' }}

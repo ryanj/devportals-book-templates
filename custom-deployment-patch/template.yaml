@@ -21,11 +21,6 @@ spec:
         - namespace
         - applicationId
       properties:
-        clusterId:
-          title: Cluster Id
-          type: string
-          description: Id of the cluster
-          default: <XXX_XXX_XXX>
         gitlabGroup:
           title: GitLab repo owner
           type: string
@@ -55,32 +50,32 @@ spec:
         url: ./manifests
         targetPath: ./patch-gitops
         values:
-          git_host: gitlab-gitlab${{parameters.clusterId}}
-          component_id: ${{parameters.namespace}}-${{parameters.applicationId}}
-          description: ${{parameters.description}}
-          destination: https://gitlab-gitlab${{ parameters.clusterId }}/${{ parameters.gitlabGroup }}/${{ parameters.namespace }}-${{ parameters.applicationId }}-gitops.git
-          source_repository: https://gitlab-gitlab${{parameters.clusterId}}/${{parameters.gitlabGroup}}/${{parameters.namespace}}-${{parameters.applicationId}}.git
-          repository_name: ${{parameters.namespace}}-${{parameters.applicationId}}-gitops
-          gitlabGroup: ${{parameters.gitlabGroup}}
-          git_owner: ${{parameters.gitlabGroup}}
-          cluster: ${{parameters.clusterId}}
-          namespace: ${{parameters.namespace}}
-          application_id: ${{parameters.applicationId}}
-          repoName: ${{parameters.namespace}}-${{parameters.applicationId}}
-          owner: ${{parameters.owner}}
-          cluster_id: ${{parameters.clusterId}}          
+          git_host: gitlab-gitlab{{cluster_subdomain}}
+          component_id: {{ '${{parameters.namespace}}' }}-{{ '${{parameters.applicationId}}' }}
+          description: {{ '${{parameters.description}}' }}
+          destination: https://gitlab-gitlab{{cluster_subdomain}}/{{ '${{ parameters.gitlabGroup }}' }}/{{ '${{ parameters.namespace }}' }}-{{ '${{ parameters.applicationId }}' }}-gitops.git
+          source_repository: https://gitlab-gitlab{{cluster_subdomain}}/{{ '${{parameters.gitlabGroup}}' }}/{{ '${{parameters.namespace}}' }}-{{ '${{parameters.applicationId}}' }}.git
+          repository_name: {{ '${{parameters.namespace}}' }}-{{ '${{parameters.applicationId}}' }}-gitops
+          gitlabGroup: {{ '${{parameters.gitlabGroup}}' }}
+          git_owner: {{ '${{parameters.gitlabGroup}}' }}
+          cluster: {{cluster_subdomain}}
+          namespace: {{ '${{parameters.namespace}}' }}
+          application_id: {{ '${{parameters.applicationId}}' }}
+          repoName: {{ '${{parameters.namespace}}' }}-{{ '${{parameters.applicationId}}' }}
+          owner: {{ '${{parameters.owner}}' }}
+          cluster_id: {{cluster_subdomain}}          
           image_host: 'image-registry.openshift-image-registry.svc:5000'
-          image_repository: ${{parameters.namespace}}
-          image_name: ${{parameters.applicationId}}
+          image_repository: {{ '${{parameters.namespace}}' }}
+          image_name: {{ '${{parameters.applicationId}}' }}
           image_tag: 'latest'
     - id: open-mr-1
       name: Open merge request 1
       action: publish:gitlab:merge-request
       input: 
-        repoUrl: gitlab-gitlab${{ parameters.clusterId }}?repo=${{ parameters.namespace }}-${{ parameters.applicationId }}-gitops&owner=${{ parameters.gitlabGroup }}
+        repoUrl: gitlab-gitlab{{cluster_subdomain}}?repo={{ '${{ parameters.namespace }}' }}-{{ '${{ parameters.applicationId }}' }}-gitops&owner={{ '${{ parameters.gitlabGroup }}' }}
         title: new files for staged deployment
         description: custom templated gitops patch
-        branchName: ${{ parameters.gitlabBranch }}-create
+        branchName: {{ '${{ parameters.gitlabBranch }}' }}-create
         targetBranchName: main
         sourcePath: ./patch-gitops/create
         targetPath: ./
@@ -90,15 +85,15 @@ spec:
       action: debug:log
       input:
         message: "find opened merge request here"
-        extra: ${{ steps['open-mr-1'].output.mergeRequestUrl }}
+        extra: {{ '${{ steps['open-mr-1'].output.mergeRequestUrl }}' }}
     - id: open-mr-2
       name: Open merge request 2
       action: publish:gitlab:merge-request
       input: 
-        repoUrl: gitlab-gitlab${{ parameters.clusterId }}?repo=${{ parameters.namespace }}-${{ parameters.applicationId }}-gitops&owner=${{ parameters.gitlabGroup }}
+        repoUrl: gitlab-gitlab{{cluster_subdomain}}?repo={{ '${{ parameters.namespace }}' }}-{{ '${{ parameters.applicationId }}' }}-gitops&owner={{ '${{ parameters.gitlabGroup }}' }}
         title: updated files for staged deployment
         description: custom templated gitops patch
-        branchName: ${{ parameters.gitlabBranch }}-update
+        branchName: {{ '${{ parameters.gitlabBranch }}' }}-update
         targetBranchName: main
         sourcePath: ./patch-gitops/update
         targetPath: ./
@@ -108,15 +103,15 @@ spec:
       action: debug:log
       input:
         message: "find opened merge request here"
-        extra: ${{ steps['open-mr-2'].output.mergeRequestUrl }}
+        extra: {{ '${{ steps['open-mr-2'].output.mergeRequestUrl }}' }}
     - id: open-mr-3
       name: Open merge request 3
       action: publish:gitlab:merge-request
       input: 
-        repoUrl: gitlab-gitlab${{ parameters.clusterId }}?repo=${{ parameters.namespace }}-${{ parameters.applicationId }}-gitops&owner=${{ parameters.gitlabGroup }}
+        repoUrl: gitlab-gitlab{{cluster_subdomain}}?repo={{ '${{ parameters.namespace }}' }}-{{ '${{ parameters.applicationId }}' }}-gitops&owner={{ '${{ parameters.gitlabGroup }}' }}
         title: deleted files for staged deployment
         description: custom templated gitops patch
-        branchName: ${{ parameters.gitlabBranch }}-delete
+        branchName: {{ '${{ parameters.gitlabBranch }}' }}-delete
         targetBranchName: main
         sourcePath: ./patch-gitops/delete
         targetPath: ./
@@ -126,4 +121,4 @@ spec:
       action: debug:log
       input:
         message: "find opened merge request here"
-        extra: ${{ steps['open-mr-3'].output.mergeRequestUrl }}
+        extra: {{ '${{ steps['open-mr-3'].output.mergeRequestUrl }}' }}
