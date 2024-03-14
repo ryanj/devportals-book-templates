@@ -85,7 +85,7 @@ spec:
       action: debug:log
       input:
         message: "find opened merge request here"
-        extra: {{ '${{ steps['open-mr-1'].output.mergeRequestUrl }}' }}
+        extra: {{ '${{ steps["open-mr-1"].output.mergeRequestUrl }}' }}
     - id: open-mr-2
       name: Open merge request 2
       action: publish:gitlab:merge-request
@@ -103,7 +103,7 @@ spec:
       action: debug:log
       input:
         message: "find opened merge request here"
-        extra: {{ '${{ steps['open-mr-2'].output.mergeRequestUrl }}' }}
+        extra: {{ '${{ steps["open-mr-2"].output.mergeRequestUrl }}' }}
     - id: open-mr-3
       name: Open merge request 3
       action: publish:gitlab:merge-request
@@ -121,4 +121,4 @@ spec:
       action: debug:log
       input:
         message: "find opened merge request here"
-        extra: {{ '${{ steps['open-mr-3'].output.mergeRequestUrl }}' }}
+        extra: {{ '${{ steps["open-mr-3"].output.mergeRequestUrl }}' }}
