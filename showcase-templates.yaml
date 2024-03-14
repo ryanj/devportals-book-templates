@@ -6,7 +6,7 @@ metadata:
 spec:
   type: url
   targets:
-     - https://{{ gitlab_host }}/{{ gitlab_group }}/prepare-to-perform-templates/blob/main/scaffolder-templates/nestjs-with-postgres/template.yaml
-     - https://{{ gitlab_host }}/{{ gitlab_group }}/prepare-to-perform-templates/blob/main/scaffolder-templates/quarkus-with-angular/template.yaml
-     - https://{{ gitlab_host }}/{{ gitlab_group }}/prepare-to-perform-templates/blob/main/scaffolder-templates/custom-component-patch/template.yaml
-     - https://{{ gitlab_host }}/{{ gitlab_group }}/prepare-to-perform-templates/blob/main/scaffolder-templates/custom-deployment-patch/template.yaml
+     - https://{{ gitlab_host }}/{{ gitlab_group }}/prepare-to-perform-templates/blob/main/nestjs-with-postgres/template.yaml
+     - https://{{ gitlab_host }}/{{ gitlab_group }}/prepare-to-perform-templates/blob/main/quarkus-with-angular/template.yaml
+     - https://{{ gitlab_host }}/{{ gitlab_group }}/prepare-to-perform-templates/blob/main/custom-component-patch/template.yaml
+     - https://{{ gitlab_host }}/{{ gitlab_group }}/prepare-to-perform-templates/blob/main/custom-deployment-patch/template.yaml
