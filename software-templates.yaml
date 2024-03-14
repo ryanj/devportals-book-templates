@@ -1,0 +1,18 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: prepare-to-perform-templates
+  description: A collection of RHDH templates for "Prepare to Perform with Red Hat Developer Hub"
+spec:
+  type: url
+  targets:
+     - https://{{ gitlab_host }}/{{ gitlab_group }}/prepare-to-perform-templates/blob/main/scaffolder-templates/nestjs-with-postgres/template.yaml
+  type: url
+  targets:
+     - https://{{ gitlab_host }}/{{ gitlab_group }}/prepare-to-perform-templates/blob/main/scaffolder-templates/quarkus-with-angular/template.yaml
+  type: url
+  targets:
+     - https://{{ gitlab_host }}/{{ gitlab_group }}/prepare-to-perform-templates/blob/main/scaffolder-templates/custom-component-patch/template.yaml
+  type: url
+  targets:
+     - https://{{ gitlab_host }}/{{ gitlab_group }}/prepare-to-perform-templates/blob/main/scaffolder-templates/custom-deployment-patch/template.yaml
