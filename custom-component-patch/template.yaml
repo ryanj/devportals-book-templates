@@ -119,4 +119,4 @@ spec:
       action: debug:log
       input:
         message: "find opened merge request(s) here"
-        extra: {{ '${{ steps["open-mr"].output.mergeRequestUrl }}' }}
+        extra: {{ ${{ steps["open-mr"].output.mergeRequestUrl }} }}
