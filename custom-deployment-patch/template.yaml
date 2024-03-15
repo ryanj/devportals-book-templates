@@ -32,13 +32,13 @@ spec:
           title: Namespace
           type: string
           description: the namespace of the component patch
-        applicationId: 
+        applicationId:
           title: Application Id
           type: string
           description: the application id of the component to patch
         gitlabBranch:
           title: GitLab Branch
-          type: string 
+          type: string
           description: the name of the source branch for the merge request
           default: templated-gitops-patch
 
@@ -63,7 +63,7 @@ spec:
           application_id: {{ '${{parameters.applicationId}}' }}
           repoName: {{ '${{parameters.namespace}}' }}-{{ '${{parameters.applicationId}}' }}
           owner: {{ '${{parameters.owner}}' }}
-          cluster_id: {{cluster_subdomain}}          
+          cluster_id: {{cluster_subdomain}}
           image_host: 'image-registry.openshift-image-registry.svc:5000'
           image_repository: {{ '${{parameters.namespace}}' }}
           image_name: {{ '${{parameters.applicationId}}' }}
@@ -71,7 +71,7 @@ spec:
     - id: open-mr-1
       name: Open merge request 1
       action: publish:gitlab:merge-request
-      input: 
+      input:
         repoUrl: gitlab-gitlab{{cluster_subdomain}}?repo={{ '${{ parameters.namespace }}' }}-{{ '${{ parameters.applicationId }}' }}-gitops&owner={{ '${{ parameters.gitlabGroup }}' }}
         title: new files for staged deployment
         description: custom templated gitops patch
@@ -85,11 +85,11 @@ spec:
       action: debug:log
       input:
         message: "find opened merge request here"
-        extra: {{ '${{ steps["open-mr-1"].output.mergeRequestUrl }}' }}
+        extra: {{ "'${{ steps['open-mr-1'].output.mergeRequestUrl }}'" }}
     - id: open-mr-2
       name: Open merge request 2
       action: publish:gitlab:merge-request
-      input: 
+      input:
         repoUrl: gitlab-gitlab{{cluster_subdomain}}?repo={{ '${{ parameters.namespace }}' }}-{{ '${{ parameters.applicationId }}' }}-gitops&owner={{ '${{ parameters.gitlabGroup }}' }}
         title: updated files for staged deployment
         description: custom templated gitops patch
@@ -107,7 +107,7 @@ spec:
     - id: open-mr-3
       name: Open merge request 3
       action: publish:gitlab:merge-request
-      input: 
+      input:
         repoUrl: gitlab-gitlab{{cluster_subdomain}}?repo={{ '${{ parameters.namespace }}' }}-{{ '${{ parameters.applicationId }}' }}-gitops&owner={{ '${{ parameters.gitlabGroup }}' }}
         title: deleted files for staged deployment
         description: custom templated gitops patch

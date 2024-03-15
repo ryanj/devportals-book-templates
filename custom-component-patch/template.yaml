@@ -36,7 +36,7 @@ spec:
           default: ''
         gitlabBranch:
           title: GitLab Branch
-          type: string 
+          type: string
           description: the name of the source branch for the merge request
           default: templated-app-patch
     - title: Provide information about the patch
@@ -74,7 +74,7 @@ spec:
       action: fetch:plain
       input:
         url: https://gitlab-gitlab{{cluster_subdomain}}/{{ '${{ parameters.gitlabGroup }}' }}/{{ '${{ each.value }}' }}
-        targetPath: ./{{ '${{ each.value }}' }}    
+        targetPath: ./{{ '${{ each.value }}' }}
     - id: patch-content
       name: Patch repo(s)
       each: {{ '${{ parameters.gitlabRepos }}' }}
@@ -107,7 +107,7 @@ spec:
       name: Open merge request(s)
       each: {{ '${{ parameters.gitlabRepos }}' }}
       action: publish:gitlab:merge-request
-      input: 
+      input:
         repoUrl: gitlab-gitlab{{cluster_subdomain}}?repo={{ '${{ each.value }}' }}&owner={{ '${{ parameters.gitlabGroup }}' }}
         title: custom patches for quarkus component
         description: custom patches for quarkus component
@@ -119,4 +119,4 @@ spec:
       action: debug:log
       input:
         message: "find opened merge request(s) here"
-        extra: {{ '${{ steps['open-mr'].output.mergeRequestUrl }}' }}
+        extra: {{ "'${{ steps['open-mr'].output.mergeRequestUrl }}'" }}
