@@ -16,7 +16,6 @@ spec:
   parameters:
     - title: Provide information about the component
       required:
-        - clusterId
         - gitlabGroup
         - namespace
         - applicationId
