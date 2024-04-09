@@ -45,6 +45,7 @@ spec:
           title: Application Id
           type: string
           description: Id of the application
+          default: poi-backend
         owner:
           title: Owner
           type: string
